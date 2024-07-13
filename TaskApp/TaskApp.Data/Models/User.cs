@@ -6,9 +6,12 @@ using System.Threading.Tasks;
 
 namespace TaskApp.Data.Models
 {
-    internal class Tasks
+    internal class User
     {
         public int Id { get; set; }
 
+        public string Name { get; set; }
+
+        public ICollection<Task> Tasks { get; set; }
     }
 }
