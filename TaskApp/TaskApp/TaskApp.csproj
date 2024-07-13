@@ -14,4 +14,8 @@
     <ProjectReference Include="..\TaskApp.Data\TaskApp.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+  </ItemGroup>
+
 </Project>
