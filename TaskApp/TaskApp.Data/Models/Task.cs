@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskApp.Data.Models
 {
-    internal class Task
+    public class Task
     {
         public int Id { get; set; }
 

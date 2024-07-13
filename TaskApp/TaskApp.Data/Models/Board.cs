@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskApp.Data.Models
 {
-    internal class Board
+    public class Board
     {
         public int Id { get; set; }
 
