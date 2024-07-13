@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,19 +32,11 @@ namespace TaskApp.Data.Context
             modelBuilder.Entity<Task>()
                 .HasKey(t => t.Id);
 
-            modelBuilder.Entity<Task>()
-                .Property(t => t.CreatedAt)
-                .HasDefaultValueSql("GETDATE()");
-
             modelBuilder.Entity<User>()
                 .HasKey(t => t.Id);
 
             modelBuilder.Entity<Board>()
                 .HasKey(t => t.Id);
-
-            modelBuilder.Entity<Board>()
-                .Property(t => t.CreatedAt)
-                .HasDefaultValueSql("GETDATE()");
 
             modelBuilder.Entity<Status>()
                 .HasKey(t => t.Id);

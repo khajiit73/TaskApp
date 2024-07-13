@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
 using TaskApp.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,11 +10,6 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-builder.Services.AddDbContext<TaskAppDbContext>(options => {
-    options.UseMySQL(connectionString);
-});
 
 var app = builder.Build();
 
