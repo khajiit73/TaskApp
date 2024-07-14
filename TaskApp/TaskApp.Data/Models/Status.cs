@@ -12,6 +12,6 @@ namespace TaskApp.Data.Models
 
         public string Name { get; set; }
 
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<TaskItem> Tasks { get; set; }
     }
 }

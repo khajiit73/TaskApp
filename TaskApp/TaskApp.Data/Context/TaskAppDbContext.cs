@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskApp.Data.Models;
-using Task = TaskApp.Data.Models.Task;
 
 namespace TaskApp.Data.Context
 {
@@ -14,7 +13,7 @@ namespace TaskApp.Data.Context
     {
         public DbSet<User> Users { get; set; }
 
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<TaskItem> Tasks { get; set; }
 
         public DbSet<Board> Boards { get; set; }
 
@@ -29,7 +28,7 @@ namespace TaskApp.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Task>()
+            modelBuilder.Entity<TaskItem>()
                 .HasKey(t => t.Id);
 
             modelBuilder.Entity<User>()
