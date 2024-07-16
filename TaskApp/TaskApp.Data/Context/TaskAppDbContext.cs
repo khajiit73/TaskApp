@@ -19,11 +19,8 @@ namespace TaskApp.Data.Context
 
         public DbSet<Status> Statuses { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public TaskAppDbContext(DbContextOptions<TaskAppDbContext> options) : base(options)
         {
-            optionsBuilder.UseMySQL("Server=localhost;Database=taskapp;Uid=root;Pwd=Asdfghjkl1*;");
-
-            base.OnConfiguring(optionsBuilder);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
