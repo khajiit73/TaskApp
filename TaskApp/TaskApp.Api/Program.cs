@@ -3,10 +3,7 @@ using TaskApp.Data.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var conStrBuilder = new MySql.Data.MySqlClient.MySqlConnectionStringBuilder(
-        builder.Configuration.GetConnectionString("TaskApp"));
-conStrBuilder.Password = builder.Configuration["TaskAppDbPassword"];
-var connection = conStrBuilder.ConnectionString;
+var connection = builder.Configuration["TaskApp:ConnectionString"];
 
 // Add services to the container.
 
