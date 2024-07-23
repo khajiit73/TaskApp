@@ -11,7 +11,7 @@ using TaskApp.Data.Context;
 namespace TaskApp.Data.Migrations
 {
     [DbContext(typeof(TaskAppDbContext))]
-    [Migration("20240713095233_init")]
+    [Migration("20240723132449_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -35,7 +35,12 @@ namespace TaskApp.Data.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Boards");
                 });
@@ -55,7 +60,7 @@ namespace TaskApp.Data.Migrations
                     b.ToTable("Statuses");
                 });
 
-            modelBuilder.Entity("TaskApp.Data.Models.Task", b =>
+            modelBuilder.Entity("TaskApp.Data.Models.TaskItem", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,7 +112,18 @@ namespace TaskApp.Data.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("TaskApp.Data.Models.Task", b =>
+            modelBuilder.Entity("TaskApp.Data.Models.Board", b =>
+                {
+                    b.HasOne("TaskApp.Data.Models.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("TaskApp.Data.Models.TaskItem", b =>
                 {
                     b.HasOne("TaskApp.Data.Models.User", "Assignee")
                         .WithMany("Tasks")

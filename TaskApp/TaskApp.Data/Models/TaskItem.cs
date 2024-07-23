@@ -14,7 +14,7 @@ namespace TaskApp.Data.Models
 
         public string Description { get; set; }
 
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         public int BoardId { get; set; }
 

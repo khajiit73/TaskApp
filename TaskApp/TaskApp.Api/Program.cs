@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TaskApp.Data.Context;
+using TaskApp.Services.Interfaces;
+using TaskApp.Services.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,9 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TaskAppDbContext>(options =>
     options.UseMySQL(connection)
 );
+
+builder.Services.AddScoped<ICurrentUserService ,CurrentUserService>();
+builder.Services.AddScoped<IBoardService, BoardService>();
 
 var app = builder.Build();
 

@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\TaskApp.Data\TaskApp.Data.csproj" />
+    <ProjectReference Include="..\TaskApp.Services\TaskApp.Services.csproj" />
   </ItemGroup>
 
 </Project>
