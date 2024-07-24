@@ -45,7 +45,17 @@ namespace TaskApp.Services.Services
         }
         public async Task CreateAsync(CreateTaskItemDto itemDto)
         {
-            var taskItem = itemDto.FromCreateDtoToTaskItem();
+            if(!_context.Boards.Any(b => b.Id == itemDto.BoardId))
+            {
+                throw new BoardNotFoundException();
+            }
+
+            if (!_context.Statuses.Any(b => b.Id == itemDto.StatusId))
+            {
+                throw new StatusNotFoundException();
+            }
+
+            var taskItem = itemDto.FromCreateDtoToTaskItem(_currentUserService);
 
             _context.Tasks.Add(taskItem);
 

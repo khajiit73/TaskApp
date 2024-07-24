@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using TaskApp.Data.Models;
+using TaskApp.Services.Interfaces;
 
 namespace TaskApp.Services.Dtos
 {
-    public record CreateTaskItemDto(string? Title, string? Description, int BoardId, int StatusId, int AssigneeId)
+    public record CreateTaskItemDto(string? Title, string? Description, int BoardId, int StatusId)
     {
     };
 
@@ -18,11 +19,10 @@ namespace TaskApp.Services.Dtos
              Title: taskItem.Title,
              Description: taskItem.Description,
              BoardId: taskItem.BoardId,
-             StatusId: taskItem.StatusId,
-             AssigneeId: taskItem.AssigneeId
+             StatusId: taskItem.StatusId
          );
 
-        public static TaskItem FromCreateDtoToTaskItem(this CreateTaskItemDto taskItemDto)
+        public static TaskItem FromCreateDtoToTaskItem(this CreateTaskItemDto taskItemDto, ICurrentUserService _currentUserService)
         {
             return new TaskItem
             {
@@ -30,7 +30,7 @@ namespace TaskApp.Services.Dtos
                 Description = taskItemDto.Description,
                 BoardId = taskItemDto.BoardId,
                 StatusId = taskItemDto.StatusId,
-                AssigneeId = taskItemDto.AssigneeId
+                AssigneeId = _currentUserService.UserId
             };
         }
     }
