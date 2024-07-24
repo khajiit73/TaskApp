@@ -9,7 +9,7 @@ using TaskApp.Data.Models;
 
 namespace TaskApp.Data.Context
 {
-    public class TaskAppDbContext : DbContext
+    public class TaskAppDbContext(DbContextOptions<TaskAppDbContext> options) : DbContext(options)
     {
         public DbSet<User> Users { get; set; }
 
@@ -19,12 +19,12 @@ namespace TaskApp.Data.Context
 
         public DbSet<Status> Statuses { get; set; }
 
-        public TaskAppDbContext(DbContextOptions<TaskAppDbContext> options) : base(options)
-        {
-        }
+        public DbSet<StatusTransition> StatusTransitions { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.Entity<TaskItem>()
                 .HasKey(t => t.Id);
 
@@ -37,7 +37,8 @@ namespace TaskApp.Data.Context
             modelBuilder.Entity<Status>()
                 .HasKey(t => t.Id);
 
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<StatusTransition>()
+                .HasKey(t => t.Id);
         }
     }
 }

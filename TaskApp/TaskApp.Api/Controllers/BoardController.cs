@@ -9,14 +9,9 @@ namespace TaskApp.Api.Controllers
 {
     [Route("api/board")]
     [ApiController]
-    public class BoardController : ControllerBase
+    public class BoardController(IBoardService service) : ControllerBase
     {
-        private readonly IBoardService _service;
-
-        public BoardController(IBoardService service)
-        {
-            _service = service;
-        }
+        private readonly IBoardService _service = service;
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Board>>> GetAllAsync()
@@ -40,7 +35,7 @@ namespace TaskApp.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateNameAsync(int id, CreateBoardDto boardDto)
+        public async Task<ActionResult> UpdateNameAsync(int id, UpdateBoardDto boardDto)
         {
             await _service.UpdateNameAsync(id, boardDto);
             return Ok();

@@ -12,48 +12,42 @@ using TaskApp.Services.Interfaces;
 
 namespace TaskApp.Services.Services
 {
-    public class BoardService : IBoardService
+    public class BoardService(TaskAppDbContext context, ICurrentUserService currentUserService) : IBoardService
     {
-        private readonly TaskAppDbContext _context;
-        private readonly ICurrentUserService _currentUserService;
+        private readonly TaskAppDbContext _context = context;
+        private readonly ICurrentUserService _currentUserService = currentUserService;
 
-        public BoardService(TaskAppDbContext context, ICurrentUserService currentUserService)
+        public async Task<IEnumerable<GetBoardDto>> GetAllAsync()
         {
-            _context = context;
-           _currentUserService = currentUserService;
-        }
-
-        public async Task<IEnumerable<Board>> GetAllAsync()
-        {
-            return await _context.Boards
+            var boards = await _context.Boards
                 .Where(x => x.UserId == _currentUserService.UserId)
                 .ToListAsync();
-        }
 
-        public async Task<Board> GetAsync(int id)
-        {
-            var board = await _context.Boards.FindAsync(id);
+            var boardDtos = new List<GetBoardDto>();
 
-            if (board is null)
+            foreach(var board in boards)
             {
-                throw new BoardNotFoundException();
+                boardDtos.Add(board.FromBoardToGetDto());
             }
 
+            return boardDtos;
+        }
+
+        public async Task<GetBoardDto> GetAsync(int id)
+        {
+            var board = await _context.Boards.FindAsync(id) ?? throw new BoardNotFoundException();
+            
             if (board.UserId != _currentUserService.UserId)
             {
                 throw new BoardHasDifferentOwnerException();
             }
 
-            return board;
+            return board.FromBoardToGetDto();
         }
 
         public async Task CreateAsync(CreateBoardDto boardDto)
         {
-            var board = new Board
-            {
-                Name = boardDto.Name,
-                UserId = _currentUserService.UserId
-            };
+            var board = boardDto.FromCreateDtoToBoard(_currentUserService);
 
             _context.Boards.Add(board);
 
@@ -62,13 +56,8 @@ namespace TaskApp.Services.Services
 
         public async Task DeleteAsync(int id) 
         {
-            var board = await _context.Boards.FindAsync(id);
-
-            if (board is null)
-            {
-                throw new BoardNotFoundException();
-            }
-
+            var board = await _context.Boards.FindAsync(id) ?? throw new BoardNotFoundException();
+            
             if (board.UserId != _currentUserService.UserId)
             {
                 throw new BoardHasDifferentOwnerException();
@@ -79,21 +68,16 @@ namespace TaskApp.Services.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateNameAsync(int id, CreateBoardDto boardDto)
+        public async Task UpdateNameAsync(int id, UpdateBoardDto boardDto)
         {
-            var existingBoard = await _context.Boards.FindAsync(id);
-
-            if (existingBoard is null)
-            {
-                throw new BoardNotFoundException();
-            }
-
+            var existingBoard = await _context.Boards.FindAsync(id) ?? throw new BoardNotFoundException();
+            
             if (existingBoard.UserId != _currentUserService.UserId)
             {
                 throw new BoardHasDifferentOwnerException();
             }
 
-            existingBoard.Name = boardDto.Name;
+            boardDto.FromUpdateDtoToBoard(existingBoard);
 
             await _context.SaveChangesAsync();
         }

@@ -10,10 +10,10 @@ namespace TaskApp.Services.Interfaces
 {
     public interface IBoardService
     {
-        Task<IEnumerable<Board>> GetAllAsync();
-        Task<Board> GetAsync(int id);
+        Task<IEnumerable<GetBoardDto>> GetAllAsync();
+        Task<GetBoardDto> GetAsync(int id);
         Task CreateAsync(CreateBoardDto board);
-        Task UpdateNameAsync(int id, CreateBoardDto boardDto);
+        Task UpdateNameAsync(int id, UpdateBoardDto boardDto);
         Task DeleteAsync(int id);
     }
 }

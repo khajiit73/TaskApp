@@ -20,6 +20,7 @@ builder.Services.AddDbContext<TaskAppDbContext>(options =>
 
 builder.Services.AddScoped<ICurrentUserService ,CurrentUserService>();
 builder.Services.AddScoped<IBoardService, BoardService>();
+builder.Services.AddScoped<ITaskItemService, TaskItemService>();
 
 var app = builder.Build();
 
