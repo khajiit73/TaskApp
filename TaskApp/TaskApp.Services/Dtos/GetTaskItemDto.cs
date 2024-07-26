@@ -8,7 +8,7 @@ using TaskApp.Data.Models;
 
 namespace TaskApp.Services.Dtos
 {
-    public record GetTaskItemDto(string? Title, string? Description, int BoardId, int StatusId, int AssigneeId)
+    public record GetTaskItemDto(string? Title, string? Description, DateTime CreatedAt, int BoardId, int StatusId, int AssigneeId)
     {
     };
 
@@ -18,6 +18,7 @@ namespace TaskApp.Services.Dtos
          (
              Title: taskItem.Title,
              Description: taskItem.Description,
+             CreatedAt: taskItem.CreatedAt,
              BoardId: taskItem.BoardId,
              StatusId: taskItem.StatusId,
              AssigneeId: taskItem.AssigneeId
@@ -27,6 +28,7 @@ namespace TaskApp.Services.Dtos
         {
             taskItem.Title = taskItemDto.Title;
             taskItem.Description = taskItemDto.Description;
+            taskItem.CreatedAt = taskItemDto.CreatedAt;
             taskItem.BoardId = taskItemDto.BoardId;
             taskItem.StatusId = taskItemDto.StatusId;
             taskItem.AssigneeId = taskItemDto.AssigneeId;

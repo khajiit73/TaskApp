@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using TaskApp.Api.Middlewares;
 using TaskApp.Data.Context;
 using TaskApp.Services.Interfaces;
 using TaskApp.Services.Services;
@@ -30,6 +31,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
