@@ -7,13 +7,8 @@ using System.Threading.Tasks;
 
 namespace TaskApp.Services.Exceptions
 {
-    public class ApplicationBaseException : Exception
+    public class ApplicationBaseException(string message, HttpStatusCode status) : Exception(message)
     {
-        public HttpStatusCode Status { get; }
-
-        public ApplicationBaseException(string message, HttpStatusCode status) : base(message)
-        {
-            Status = status;
-        }
+        public HttpStatusCode Status { get; } = status;
     }
 }

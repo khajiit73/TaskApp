@@ -1,5 +1,8 @@
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using TaskApp.Api.Middlewares;
+using TaskApp.Api.Validators;
 using TaskApp.Data.Context;
 using TaskApp.Services.Interfaces;
 using TaskApp.Services.Services;
@@ -11,6 +14,9 @@ var connection = builder.Configuration["TaskApp:ConnectionString"];
 // Add services to the container.
 
 builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateBoardDtoValidator>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateTaskItemDtoValidator>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
