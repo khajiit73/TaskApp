@@ -13,5 +13,7 @@ namespace TaskApp.Data.Models
         public string Name { get; set; }
 
         public ICollection<TaskItem> Tasks { get; set; }
+
+        public ICollection<Board> Boards { get; set; }
     }
 }

@@ -11,8 +11,8 @@ using TaskApp.Data.Context;
 namespace TaskApp.Data.Migrations
 {
     [DbContext(typeof(TaskAppDbContext))]
-    [Migration("20240723132449_init")]
-    partial class init
+    [Migration("20240728091851_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,15 +32,14 @@ namespace TaskApp.Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Boards");
                 });
@@ -60,6 +59,27 @@ namespace TaskApp.Data.Migrations
                     b.ToTable("Statuses");
                 });
 
+            modelBuilder.Entity("TaskApp.Data.Models.StatusTransition", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int>("CurrentStatusId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NextStatusId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrentStatusId");
+
+                    b.HasIndex("NextStatusId");
+
+                    b.ToTable("StatusTransitions");
+                });
+
             modelBuilder.Entity("TaskApp.Data.Models.TaskItem", b =>
                 {
                     b.Property<int>("Id")
@@ -76,14 +96,12 @@ namespace TaskApp.Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -114,13 +132,32 @@ namespace TaskApp.Data.Migrations
 
             modelBuilder.Entity("TaskApp.Data.Models.Board", b =>
                 {
-                    b.HasOne("TaskApp.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("TaskApp.Data.Models.User", "Owner")
+                        .WithMany("Boards")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Owner");
+                });
+
+            modelBuilder.Entity("TaskApp.Data.Models.StatusTransition", b =>
+                {
+                    b.HasOne("TaskApp.Data.Models.Status", "CurrentStatus")
+                        .WithMany()
+                        .HasForeignKey("CurrentStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TaskApp.Data.Models.Status", "NextStatus")
+                        .WithMany()
+                        .HasForeignKey("NextStatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CurrentStatus");
+
+                    b.Navigation("NextStatus");
                 });
 
             modelBuilder.Entity("TaskApp.Data.Models.TaskItem", b =>
@@ -162,6 +199,8 @@ namespace TaskApp.Data.Migrations
 
             modelBuilder.Entity("TaskApp.Data.Models.User", b =>
                 {
+                    b.Navigation("Boards");
+
                     b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618

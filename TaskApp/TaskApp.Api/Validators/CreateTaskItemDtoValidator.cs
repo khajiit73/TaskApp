@@ -8,7 +8,7 @@ namespace TaskApp.Api.Validators
         public CreateTaskItemDtoValidator()
         {
             RuleFor(x => x.Title)
-                .MaximumLength(30);
+                .MaximumLength(40);
 
             RuleFor(x => x.Description)
                 .MaximumLength(100);

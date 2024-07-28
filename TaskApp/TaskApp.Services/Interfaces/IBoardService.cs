@@ -13,7 +13,7 @@ namespace TaskApp.Services.Interfaces
         Task<IEnumerable<GetBoardDto>> GetAllAsync();
         Task<GetBoardDto> GetAsync(int id);
         Task CreateAsync(CreateBoardDto board);
-        Task UpdateNameAsync(int id, UpdateBoardDto boardDto);
+        Task UpdateNameAsync(UpdateBoardDto boardDto);
         Task DeleteAsync(int id);
     }
 }

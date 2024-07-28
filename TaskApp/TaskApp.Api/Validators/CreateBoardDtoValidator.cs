@@ -8,7 +8,7 @@ namespace TaskApp.Api.Validators
         public CreateBoardDtoValidator()
         {
             RuleFor(x => x.Name)
-                .MaximumLength(30);
+                .MaximumLength(40);
         }
     }
 }

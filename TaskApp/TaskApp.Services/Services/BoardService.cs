@@ -20,15 +20,10 @@ namespace TaskApp.Services.Services
         public async Task<IEnumerable<GetBoardDto>> GetAllAsync()
         {
             var boards = await _context.Boards
-                .Where(x => x.UserId == _currentUserService.UserId)
+                .Where(x => x.OwnerId == _currentUserService.UserId)
                 .ToListAsync();
 
-            var boardDtos = new List<GetBoardDto>();
-
-            foreach(var board in boards)
-            {
-                boardDtos.Add(board.FromBoardToGetDto());
-            }
+            var boardDtos = boards.Select(x => x.FromBoardToGetDto()).ToList();
 
             return boardDtos;
         }
@@ -37,7 +32,7 @@ namespace TaskApp.Services.Services
         {
             var board = await _context.Boards.FindAsync(id) ?? throw new BoardNotFoundException();
             
-            if (board.UserId != _currentUserService.UserId)
+            if (board.OwnerId != _currentUserService.UserId)
             {
                 throw new BoardHasDifferentOwnerException();
             }
@@ -58,7 +53,7 @@ namespace TaskApp.Services.Services
         {
             var board = await _context.Boards.FindAsync(id) ?? throw new BoardNotFoundException();
             
-            if (board.UserId != _currentUserService.UserId)
+            if (board.OwnerId != _currentUserService.UserId)
             {
                 throw new BoardHasDifferentOwnerException();
             }
@@ -68,11 +63,11 @@ namespace TaskApp.Services.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateNameAsync(int id, UpdateBoardDto boardDto)
+        public async Task UpdateNameAsync(UpdateBoardDto boardDto)
         {
-            var existingBoard = await _context.Boards.FindAsync(id) ?? throw new BoardNotFoundException();
+            var existingBoard = await _context.Boards.FindAsync(boardDto.Id) ?? throw new BoardNotFoundException();
             
-            if (existingBoard.UserId != _currentUserService.UserId)
+            if (existingBoard.OwnerId != _currentUserService.UserId)
             {
                 throw new BoardHasDifferentOwnerException();
             }
