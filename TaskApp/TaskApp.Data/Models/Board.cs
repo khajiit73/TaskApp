@@ -16,7 +16,7 @@ namespace TaskApp.Data.Models
 
         public ICollection<TaskItem>? Tasks { get; set; }
 
-        public int UserId { get; set; }
-        public User? User { get; set; }
+        public int OwnerId { get; set; }
+        public User Owner { get; set; }
     }
 }

@@ -22,7 +22,7 @@ namespace TaskApp.Services.Dtos
             return new Board
             {
                 Name = boardDto.Name,
-                UserId = _currentUserService.UserId
+                OwnerId = _currentUserService.UserId
             };
         }
     }

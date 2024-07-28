@@ -10,15 +10,13 @@ namespace TaskApp.Services.Interfaces
 {
     public interface ITaskItemService
     {
-        bool ValidateStatusChange(int currentStatusId, int newStatusId);
-
         Task<IEnumerable<GetTaskItemDto>> GetAllAsync();
 
         Task<GetTaskItemDto> GetAsync(int id);
 
         Task CreateAsync(CreateTaskItemDto itemDto);
 
-        Task UpdateAsync(int id, UpdateTaskItemDto itemDto);
+        Task UpdateAsync(UpdateTaskItemDto itemDto);
 
         Task DeleteAsync(int id);
     }

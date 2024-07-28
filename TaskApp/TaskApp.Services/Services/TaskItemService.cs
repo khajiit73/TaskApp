@@ -22,12 +22,7 @@ namespace TaskApp.Services.Services
                 .Where(t => t.AssigneeId == _currentUserService.UserId)
                 .ToListAsync();
 
-            var taskItemDtos = new List<GetTaskItemDto>();
-
-            foreach(var taskItem in taskItems)
-            {
-                taskItemDtos.Add(taskItem.FromTaskItemToGetDto());
-            }
+            var taskItemDtos = taskItems.Select(x => x.FromTaskItemToGetDto()).ToList();
 
             return taskItemDtos;
         }
@@ -45,12 +40,12 @@ namespace TaskApp.Services.Services
         }
         public async Task CreateAsync(CreateTaskItemDto itemDto)
         {
-            if(!_context.Boards.Any(b => b.Id == itemDto.BoardId))
+            if(!await _context.Boards.AnyAsync(b => b.Id == itemDto.BoardId))
             {
                 throw new BoardNotFoundException();
             }
 
-            if (!_context.Statuses.Any(b => b.Id == itemDto.StatusId))
+            if (!await _context.Statuses.AnyAsync(b => b.Id == itemDto.StatusId))
             {
                 throw new StatusNotFoundException();
             }
@@ -62,16 +57,16 @@ namespace TaskApp.Services.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task UpdateAsync(int id, UpdateTaskItemDto itemDto)
+        public async Task UpdateAsync(UpdateTaskItemDto itemDto)
         {
-            var existingTaskItem = await _context.Tasks.FindAsync(id) ?? throw new TaskItemNotFoundException();
+            var existingTaskItem = await _context.Tasks.FindAsync(itemDto.Id) ?? throw new TaskItemNotFoundException();
             
             if (existingTaskItem.AssigneeId != _currentUserService.UserId)
             {
                 throw new TaskItemHasDifferentOwnerException();
             }
 
-            if(!ValidateStatusChange(existingTaskItem.StatusId, itemDto.StatusId))
+            if(!await ValidateStatusChange(existingTaskItem.StatusId, itemDto.StatusId))
             {
                 throw new InvalidStatusChangeException();
             }
@@ -95,9 +90,9 @@ namespace TaskApp.Services.Services
             await _context.SaveChangesAsync();
         }
 
-        public bool ValidateStatusChange(int currentStatusId, int newStatusId)
+        private async Task<bool> ValidateStatusChange(int currentStatusId, int newStatusId)
         {
-            return _context.StatusTransitions.Any(st => st.CurrentStatusId == currentStatusId && st.NextStatusId == newStatusId);
+            return await _context.StatusTransitions.AnyAsync(st => st.CurrentStatusId == currentStatusId && st.NextStatusId == newStatusId);
         }
     }
 }

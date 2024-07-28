@@ -35,9 +35,9 @@ namespace TaskApp.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateNameAsync(int id, UpdateBoardDto boardDto)
+        public async Task<ActionResult> UpdateNameAsync(UpdateBoardDto boardDto)
         {
-            await _service.UpdateNameAsync(id, boardDto);
+            await _service.UpdateNameAsync(boardDto);
             return Ok();
         }
 

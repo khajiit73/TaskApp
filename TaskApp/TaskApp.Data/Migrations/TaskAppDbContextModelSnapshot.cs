@@ -29,15 +29,14 @@ namespace TaskApp.Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Name")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("UserId")
+                    b.Property<int>("OwnerId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Boards");
                 });
@@ -94,14 +93,12 @@ namespace TaskApp.Data.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.Property<int>("StatusId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
-                        .IsRequired()
                         .HasColumnType("longtext");
 
                     b.HasKey("Id");
@@ -132,13 +129,13 @@ namespace TaskApp.Data.Migrations
 
             modelBuilder.Entity("TaskApp.Data.Models.Board", b =>
                 {
-                    b.HasOne("TaskApp.Data.Models.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
+                    b.HasOne("TaskApp.Data.Models.User", "Owner")
+                        .WithMany("Boards")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.Navigation("Owner");
                 });
 
             modelBuilder.Entity("TaskApp.Data.Models.StatusTransition", b =>
@@ -199,6 +196,8 @@ namespace TaskApp.Data.Migrations
 
             modelBuilder.Entity("TaskApp.Data.Models.User", b =>
                 {
+                    b.Navigation("Boards");
+
                     b.Navigation("Tasks");
                 });
 #pragma warning restore 612, 618

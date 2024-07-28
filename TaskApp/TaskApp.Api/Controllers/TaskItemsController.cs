@@ -34,9 +34,9 @@ namespace TaskApp.Api.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> UpdateAsync(int id, UpdateTaskItemDto taskItemDto)
+        public async Task<ActionResult> UpdateAsync(UpdateTaskItemDto taskItemDto)
         {
-            await _service.UpdateAsync(id, taskItemDto);
+            await _service.UpdateAsync(taskItemDto);
             return Ok();
         }
 

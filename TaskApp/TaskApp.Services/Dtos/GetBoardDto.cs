@@ -15,14 +15,14 @@ namespace TaskApp.Services.Dtos
          (
              Name: board.Name,
              CreatedAt: board.CreatedAt,
-             UserId: board.UserId
+             UserId: board.OwnerId
          );
 
         public static void FromGetDtoToBoard(this GetBoardDto boardDto, Board board)
         {
             board.Name = boardDto.Name;
             board.CreatedAt = boardDto.CreatedAt;
-            board.UserId = boardDto.UserId;
+            board.OwnerId = boardDto.UserId;
         }
     }
 }
