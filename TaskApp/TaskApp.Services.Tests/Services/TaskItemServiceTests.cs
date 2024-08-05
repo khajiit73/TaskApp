@@ -16,7 +16,7 @@ namespace TaskApp.Services.Tests.Services
 {
     public class TaskItemServiceTests
     {
-        private const int UserId = 1;
+        private const string UserId = "1";
 
         [Fact]
         public async Task GetTaskItemAsync_WithNonExistingItem_ThrowsTaskItemNotFoundException()
@@ -48,7 +48,7 @@ namespace TaskApp.Services.Tests.Services
                 Id = 1,
                 Title = "test",
                 Description = "test",
-                AssigneeId = 2,
+                AssigneeId = "2",
             };
             context.Tasks.Add(item);
             await context.SaveChangesAsync();
@@ -142,7 +142,7 @@ namespace TaskApp.Services.Tests.Services
                 Description: "test",
                 BoardId: 2,
                 StatusId: 1,
-                AssigneeId: 1
+                AssigneeId: "1"
             );
             var service = new TaskItemService(context, currentUserService.Object);
 
@@ -169,7 +169,7 @@ namespace TaskApp.Services.Tests.Services
                 Description = "test",
                 BoardId = 1,
                 StatusId = 1,
-                AssigneeId = 2
+                AssigneeId = "2"
             };
 
             var updateItem = createItem.FromTaskItemToUpdateDto();
@@ -216,7 +216,7 @@ namespace TaskApp.Services.Tests.Services
                 Description: "test",
                 BoardId: 1,
                 StatusId: 57,
-                AssigneeId: 1
+                AssigneeId: "1"
             );
 
             var taskService = new TaskItemService(context, currentUserService.Object);
@@ -258,7 +258,7 @@ namespace TaskApp.Services.Tests.Services
                 Id = 1,
                 Title = "test",
                 Description = "test",
-                AssigneeId = 2,
+                AssigneeId = "2",
             };
             context.Tasks.Add(item);
             await context.SaveChangesAsync();

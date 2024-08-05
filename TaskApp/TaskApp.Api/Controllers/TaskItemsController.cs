@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TaskApp.Data.Models;
 using TaskApp.Services.Dtos;
@@ -6,6 +7,7 @@ using TaskApp.Services.Interfaces;
 
 namespace TaskApp.Api.Controllers
 {
+    [Authorize]
     [Route("api/task-items")]
     [ApiController]
     public class TaskItemsController(ITaskItemService service) : ControllerBase

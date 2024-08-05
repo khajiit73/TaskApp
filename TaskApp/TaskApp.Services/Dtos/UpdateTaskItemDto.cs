@@ -7,7 +7,7 @@ using TaskApp.Data.Models;
 
 namespace TaskApp.Services.Dtos
 {
-    public record UpdateTaskItemDto(int Id, string? Title, string? Description, int BoardId, int StatusId, int AssigneeId);
+    public record UpdateTaskItemDto(int Id, string? Title, string? Description, int BoardId, int StatusId, string AssigneeId);
 
     public static class UpdateTaskItemDtoExtensions
     {

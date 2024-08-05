@@ -20,12 +20,12 @@ namespace TaskApp.Data.Models
 
         public int StatusId { get; set; }
 
-        public int AssigneeId { get; set; }
+        public string AssigneeId { get; set; }
 
-        public Board? Board { get; set; }
+        public Board Board { get; set; }
 
-        public Status? Status { get; set; }
+        public Status Status { get; set; }
 
-        public User? Assignee { get; set; }
+        public User Assignee { get; set; }
     }
 }

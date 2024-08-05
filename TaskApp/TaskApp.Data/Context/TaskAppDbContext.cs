@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,10 +10,8 @@ using TaskApp.Data.Models;
 
 namespace TaskApp.Data.Context
 {
-    public class TaskAppDbContext(DbContextOptions<TaskAppDbContext> options) : DbContext(options)
+    public class TaskAppDbContext(DbContextOptions<TaskAppDbContext> options) : IdentityDbContext<User>(options)
     {
-        public DbSet<User> Users { get; set; }
-
         public DbSet<TaskItem> Tasks { get; set; }
 
         public DbSet<Board> Boards { get; set; }

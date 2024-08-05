@@ -7,7 +7,7 @@ using TaskApp.Data.Models;
 
 namespace TaskApp.Services.Dtos
 {
-    public record UpdateBoardDto(int Id, string? Name, int OwnerId);
+    public record UpdateBoardDto(int Id, string? Name, string OwnerId);
 
     public static class UpdateBoardDtoExtensions
     {

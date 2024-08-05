@@ -16,7 +16,7 @@ namespace TaskApp.Services.Tests.Services
 {
     public class BoardServiceTests
     {
-        private readonly int UserId = 1;
+        private readonly string UserId = "1";
 
         [Fact]
         public async Task GetBoardAsync_WithNonExistingBoard_ThrowsBoardNotFoundException()
@@ -47,7 +47,7 @@ namespace TaskApp.Services.Tests.Services
             { 
                 Id = 1,
                 Name = "Test",
-                OwnerId = 2
+                OwnerId = "2"
             };
 
             context.Boards.Add(item);
@@ -92,7 +92,7 @@ namespace TaskApp.Services.Tests.Services
             {
                 Id = 1,
                 Name = "Test",
-                OwnerId = 2
+                OwnerId = "2"
             };
 
             context.Boards.Add(item);
@@ -122,7 +122,7 @@ namespace TaskApp.Services.Tests.Services
             (
                 Id: 1,
                 Name: "Test",
-                OwnerId: 1
+                OwnerId: "1"
             );
 
             // Act
@@ -144,7 +144,7 @@ namespace TaskApp.Services.Tests.Services
             {
                 Id = 1,
                 Name = "Test",
-                OwnerId = 2
+                OwnerId = "2"
             };
 
             var boardDto = item.FromBoardToUpdateDto();

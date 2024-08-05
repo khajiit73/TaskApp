@@ -7,7 +7,7 @@ using TaskApp.Data.Models;
 
 namespace TaskApp.Services.Dtos
 {
-    public record GetBoardDto(string? Name, DateTime CreatedAt, int UserId);
+    public record GetBoardDto(string? Name, DateTime CreatedAt, string UserId);
 
     public static class GetBoardDtoExtensions
     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using TaskApp.Data.Models;
 using TaskApp.Services.Dtos;
@@ -7,6 +8,7 @@ using TaskApp.Services.Services;
 
 namespace TaskApp.Api.Controllers
 {
+    [Authorize]
     [Route("api/board")]
     [ApiController]
     public class BoardController(IBoardService service) : ControllerBase
