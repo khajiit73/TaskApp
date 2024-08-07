@@ -15,9 +15,9 @@ jobs:
       with:
         dotnet-version: '8.0.x'
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore TaskApp/TaskApp.sln
     - name: Publish
-      run: dotnet publish --configuration Release --output ./publish
+      run: dotnet publish TaskApp/TaskApp.sln --configuration Release --output ./publish
     - name: Upload Artifact
       uses: actions/upload-artifact@v4
       with:
